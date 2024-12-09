@@ -8,11 +8,6 @@ const getAllUsers = async () => {
 
 const getUser = async () => {};
 
-// const getUserByEmail = async(email: string) => {
-//   const users = await getAllUsers();
-
-// }
-
 const getUserByEmail = async (email: string) => {
   const user = UserModel.findOneByEmail(email);
   return user;

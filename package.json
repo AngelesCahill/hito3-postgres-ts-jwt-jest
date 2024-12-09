@@ -1,7 +1,6 @@
 {
   "name": "006-hito3",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
   "exports": "./dist/index.js",
   "scripts": {
@@ -29,10 +28,12 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.21.2",
     "httperror": "^0.2.3",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
-    "swagger": "^0.7.5",
+    "swagger": "^0.0.1",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0"
   }
 }
