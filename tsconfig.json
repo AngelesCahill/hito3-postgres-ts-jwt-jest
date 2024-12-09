@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "module": "Preserve",
+    "target": "es2022",
     "strict": true,
+    "outDir": "./dist",
     "moduleDetection": "force",
+    "module": "Preserve",
+    "resolveJsonModule": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+    "isolatedModules": true
+  }
 }
