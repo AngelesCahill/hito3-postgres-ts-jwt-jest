@@ -1,33 +1,33 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { projectService } from "../services/project.service";
 
-const findAll = async (req: Request, res: Response)=>{
+const findAll = async (req: Request, res: Response, next: NextFunction)=>{
   try {
     const projects = await projectService.findAll();
     res.json({
       projects,
     });
   } catch (error) {
-    console.log(error);
-    if (error instanceof Error){
-      res.status(500).json({ error: error.message });
-    } else res.status(500).json({ error: "Error de servidor" });
+    next(error);
   }
 };
 
-const findOneById = async (req: Request, res: Response)=>{
+const findOneById = async (req: Request, res: Response, next: NextFunction)=>{
     try {
         const { id } = req.params;
+        if(!id){
+            res.status(400).json({
+                ok: false,
+                msg: "Proyecto no encontrado"
+            })
+        }
         res.json({});
     } catch (error) {
-        console.log(error);
-        if (error instanceof Error){
-            res.status(500).json({ error: error.message });
-        } else res.status(500).json({ error: "Error de servidor" });
+        next(error);
     }
 };
 
-const create = async (req: Request, res: Response) => {
+const create = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { title, description, imgurl } = req.body;
       const newProject = await projectService.create(
@@ -35,25 +35,31 @@ const create = async (req: Request, res: Response) => {
         description,
         imgurl
       );
+      if(!title || !description || !imgurl){
+        res.status(400).json({
+            ok: false,
+            msg: "Todos los campos son requeridos"
+        })
+      }
       res.json({ newProject });
     } catch (error) {
-      console.log(error);
-      if (error instanceof Error) {
-        res.status(500).json({ error: error.message });
-      } else res.status(500).json({ error: "Error de servidor" });
+      next(error);
     }
   };
 
-  const deleteById = async(req: Request, res: Response) =>{
+  const deleteById = async(req: Request, res: Response, next: NextFunction) =>{
     try {
         const {id} = req.params;
         const deletedProject = await projectService.deleteById(id);
+        if(!deletedProject){
+            res.status(400).json({
+                ok: false,
+                msg: "Proyecto no encontrado"
+            })
+        }
         res.json({msg: "Proyecto eliminado con éxito", deletedProject})
     } catch (error) {
-        console.log(error);
-      if (error instanceof Error) {
-        res.status(500).json({ error: error.message });
-      } else res.status(500).json({ error: "Error de servidor" });
+        next(error);
     }
 
   };
