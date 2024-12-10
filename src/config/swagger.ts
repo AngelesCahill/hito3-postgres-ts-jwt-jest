@@ -4,7 +4,7 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API REST Veterinarian Pets",
+      title: "API REST Proyectos arquitectura y construcción",
       version: "1.0.0",
       description: "Documentation for api rest",
     },
