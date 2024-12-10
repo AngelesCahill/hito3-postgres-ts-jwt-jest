@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const secret = process.env.JWT_SECRET || "secret";
+const secret = process.env.JWT_SECRET || "palabrasecreta";
 
 export const generateAccessToken = (
   email: string,
