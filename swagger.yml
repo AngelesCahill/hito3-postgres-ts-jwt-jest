@@ -2,6 +2,7 @@ openapi: "3.0.0"
 info:
   title: "API Proyectos arquitectura y construcción"
   version: "1.0.0"
+  description: "API REST para gestión de proyectos de arquitectura y construcción"
 
 paths:
   /auth/login:
@@ -234,7 +235,8 @@ paths:
         500:
           description: "Internal Server Error"
 
-    delete/{uid}:
+  /projects/{uid}:
+    delete:
       tags:
         - "projects"
       summary: "Delete a specific project"
@@ -246,7 +248,7 @@ paths:
           required: true
           schema:
             type: "string"
-            format: "uid"
+            format: "uuid"
             example: "e748fdbf-44b5-4711-b7b9-ef04594b5298"
       responses:
         204:
@@ -315,9 +317,9 @@ components:
       type: "object"
       properties:
         uid:
-          type: "number"
-          format: "uid"
-          example: 1
+          type: "string"
+          format: "uuid"
+          example: "e748fdbf-44b5-4711-b7b9-ef04594b5298"
         title:
           type: "string"
           example: "Proyecto 1"
@@ -326,17 +328,30 @@ components:
           example: "Description project 1"
         imgurl:
           type: "string"
-          example: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMbl00OZ12aMJzxIU9yR4_3SrnlidhNfRo8Q&s"
+          format: "uri"
+          example: "https://example.com/image.jpg"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
 
     ProjectBody:
       type: "object"
+      required: ["title", "description", "imgurl"]
       properties:
         title:
           type: "string"
           example: "Proyecto 1"
-        descripttion:
+          minLength: 1
+          maxLength: 100
+        description:
           type: "string"
           example: "Description project 1"
+          minLength: 1
+          maxLength: 500
         imgurl:
           type: "string"
-          example: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMbl00OZ12aMJzxIU9yR4_3SrnlidhNfRo8Q&s"
+          format: "uri"
+          example: "https://example.com/image.jpg"
