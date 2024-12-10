@@ -1,7 +1,6 @@
 export interface Project {
-    id: string;
-    userId: string;
+    uid: number;
     title: string;
     description: string;
-    imageUrl: string;
+    imgurl: string;
 }

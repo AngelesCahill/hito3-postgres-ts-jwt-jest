@@ -6,8 +6,8 @@ const findAll = async()=>{
     return projects;
 };
 
-const findOneById = async (id: string)=>{
-    const project = await ProjectModel.findOneById(id);
+const findOneById = async (uid: string)=>{
+    const project = await ProjectModel.findOneById(uid);
     return project;
 };
 
@@ -16,8 +16,8 @@ const create = async(title: string, description: string, imgurl: string)=>{
     return newProject;
 };
 
-const deleteById = async(id: string)=>{
-    const project = await ProjectModel.deleteById(id);
+const deleteById = async(uid: string)=>{
+    const project = await ProjectModel.deleteById(uid);
     if (!project) {
         throw new HttpError("Este projecto no existe", 404);
       }

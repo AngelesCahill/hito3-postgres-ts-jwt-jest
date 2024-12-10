@@ -2,20 +2,28 @@ import { db } from "../config/connection.db";
 import { Project } from "../interfaces/project.interface";
 
 const findAll = async () => {
-  const { rows } = await db.query("SELECT * FROM projects");
+  const { rows } = await db.query("SELECT uid, title, description, imgurl FROM projects");
   return rows as Project[];
 };
 
-const findOneById = async (id: string) => {
+const findOneById = async (uid: string) => {
+  console.log('Buscando proyecto con UID:', uid);
+
   const query = {
     text: `
-    SELECT * FROM projects
-    WHERE id = $1
+    SELECT uid, title, description, imgurl 
+    FROM projects
+    WHERE uid = $1
     `,
-    values: [id],
+    values: [uid],
   };
 
   const { rows } = await db.query(query);
+  console.log('Resultado de la consulta:', rows);
+  
+  if (rows.length === 0) {
+    throw new Error('Project not found');
+  }
 
   return rows[0] as Project;
 };
@@ -35,17 +43,25 @@ const create = async (title: string, description: string, imgurl: string) => {
   return rows[0] as Project;
 };
 
-const deleteById = async (id: string) => {
+const deleteById = async (uid: string) => {
+    console.log('Intentando eliminar proyecto con UID:', uid);
+
     const query = {
         text: `
             DELETE FROM projects
-            WHERE id = $1
-            RETURNING *
+            WHERE uid = $1
+            RETURNING uid, title, description, imgurl
         `,
-        values: [id]
+        values: [uid]
     }
 
     const { rows } = await db.query(query);
+    console.log('Resultado del delete:', rows);
+    
+    if (rows.length === 0) {
+        throw new Error('Project not found');
+    }
+
     return rows[0] as Project;
 }
 

@@ -14,14 +14,15 @@ const findAll = async (req: Request, res: Response, next: NextFunction)=>{
 
 const findOneById = async (req: Request, res: Response, next: NextFunction)=>{
     try {
-        const { id } = req.params;
-        if(!id){
+        const { uid } = req.params;
+        const project = await projectService.findOneById(uid)
+        if(!uid){
             res.status(400).json({
                 ok: false,
                 msg: "Proyecto no encontrado"
             })
         }
-        res.json({});
+        res.json({project});
     } catch (error) {
         next(error);
     }
@@ -41,7 +42,10 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
             msg: "Todos los campos son requeridos"
         })
       }
-      res.json({ newProject });
+      res.json({
+        ok: true,
+        msg: "Proyecto creado con éxito"
+      });
     } catch (error) {
       next(error);
     }
@@ -49,8 +53,8 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 
   const deleteById = async(req: Request, res: Response, next: NextFunction) =>{
     try {
-        const {id} = req.params;
-        const deletedProject = await projectService.deleteById(id);
+        const {uid} = req.params;
+        const deletedProject = await projectService.deleteById(uid);
         if(!deletedProject){
             res.status(400).json({
                 ok: false,

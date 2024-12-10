@@ -6,7 +6,7 @@ const router = Router();
 
 // path: http:localhost:3000/api/v1/users
 
-router.get("/", verifyToken, userController.getUsers);
+router.get("/", userController.getUsers);
 router.get("/:id", userController.getUser);
 router.post("/", userController.createUser);
 
